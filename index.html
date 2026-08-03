@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Book Store</title>
+
+  <!-- LINK KE FILE CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage">
+    <h1>LOGIN</h1>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Masuk</button>
+    <p id="loginError"></p>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div id="homePage">
+    <button id="logoutBtn" onclick="logout()">Logout</button>
+    <h1>ONLINE BOOK STORE</h1>
+
+    <div class="layout">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <div>📘 Jenis buku</div>
+        <div>📒 Deskripsi</div>
+        <div>📗 Harga</div>
+      </div>
+
+      <!-- ISI BUKU -->
+      <div class="book-section">
+        <!-- Baris 1: Jenis Buku -->
+        <div class="book-row0">
+          <div class="book"><h2>Novel</h2></div>
+          <div class="book"><h2>Anak-Anak</h2></div>
+          <div class="book"><h2>Cerita Pendek</h2></div>
+        </div>
+
+        <!-- Baris 2: Deskripsi -->
+        <div class="book-row1">
+          <div class="book">
+            <p>Judul: Lautan Biru<br>Terinspirasi dari seseorang yang<br>takjub dengan indahnya lautan biru</p>
+          </div>
+          <div class="book">
+            <p>Judul: Jerapah Pintar<br>Terinspirasi dari seekor jerapah<br>yang sangat pintar di kebun binatang</p>
+          </div>
+          <div class="book">
+            <p>Judul: Perjalanan di Gunung<br>Terinspirasi dari seseorang yang<br>sedang berlibur ke gunung</p>
+          </div>
+        </div>
+
+        <!-- Baris 3: Harga dan Tombol -->
+        <div class="book-row">
+          <div class="book">
+            <p class="price">Harga: Rp. 30.000,00</p>
+            <button onclick="addToCart('Lautan Biru', 30000)">Tambah ke dalam keranjang</button>
+          </div>
+          <div class="book">
+            <p class="price">Harga: Rp. 15.000,00</p>
+            <button onclick="addToCart('Jerapah Pintar', 15000)">Tambah ke dalam keranjang</button>
+          </div>
+          <div class="book">
+            <p class="price">Harga: Rp. 60.000,00</p>
+            <button onclick="addToCart('Perjalanan di Gunung', 60000)">Tambah ke dalam keranjang</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KERANJANG -->
+    <div id="cartInfo">
+      <p>🛒Keranjang: <span id="cartCount">0</span> buku | Total: Rp. <span id="cartTotal">0</span></p>
+     <div id="belisemua"><h1><button onclick="checkout()">Beli Semua</button></h1></div>
+  </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function login() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if (user === 'admin' && pass === '12345') {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('homePage').style.display = 'block';
+      } else {
+        document.getElementById('loginError').textContent = "Username atau password salah!";
+      }
+    }
+
+    function logout() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'flex';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('loginError').textContent = '';
+      cart = [];
+      total = 0;
+      updateCart();
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      total += price;
+      updateCart();
+      alert(name + " buku telah disimpan di keranjang");
+    }
+
+    function updateCart() {
+      document.getElementById('cartCount').textContent = cart.length;
+      document.getElementById('cartTotal').textContent = total.toLocaleString('id-ID');
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Keranjang kosong!");
+      } else {
+        alert("Terima kasih telah membeli " + cart.length + " buku! Total: Rp. " + total.toLocaleString('id-ID'));
+        cart = [];
+        total = 0;
+        updateCart();
+      }
+    }
+  </script>
+
+</body>
+</html>
